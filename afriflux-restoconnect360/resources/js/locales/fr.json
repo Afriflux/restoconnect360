@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "restaurants": "Commerces",
+    "findStore": "Trouver un Commerce",
+    "cart": "Panier",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "register": "S'inscrire"
+  },
+  "home": {
+    "hero": {
+      "title": "Découvrez les Meilleurs Commerces Près de Vous",
+      "subtitle": "Commandez, Livraison Rapide avec Tracking GPS en Temps Réel",
+      "browseRestaurants": "Explorer les Commerces",
+      "findNearby": "Trouver à Proximité"
+    },
+    "featured": {
+      "title": "Commerces en Vedette"
+    },
+    "features": {
+      "title": "Pourquoi Choisir RestoConnect360 ?",
+      "geolocation": {
+        "title": "Géolocalisation Précise",
+        "description": "Trouvez les commerces les plus proches en temps réel"
+      },
+      "fastDelivery": {
+        "title": "Livraison Rapide",
+        "description": "Tracking GPS en direct de votre commande"
+      },
+      "payment": {
+        "title": "Paiements Sécurisés",
+        "description": "Wave, Orange Money, MTN Money, Moov Money et plus"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Votre plateforme de commande et livraison en ligne",
+    "links": "Liens Rapides",
+    "contact": "Contact",
+    "rights": "Tous droits réservés"
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Se Connecter",
+      "noAccount": "Pas encore de compte ?",
+      "registerLink": "S'inscrire"
+    },
+    "register": {
+      "title": "Inscription",
+      "name": "Nom Complet",
+      "email": "Email",
+      "phone": "Téléphone",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "submit": "S'inscrire",
+      "hasAccount": "Déjà un compte ?",
+      "loginLink": "Se connecter"
+    }
+  },
+  "restaurant": {
+    "openNow": "Ouvert",
+    "closed": "Fermé",
+    "deliveryFee": "Frais de livraison",
+    "minOrder": "Commande minimum",
+    "delivery": "Livraison",
+    "takeaway": "À emporter",
+    "dineIn": "Sur place"
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide",
+    "subtotal": "Sous-total",
+    "tax": "TVA (18%)",
+    "deliveryFee": "Frais de livraison",
+    "total": "Total",
+    "checkout": "Commander",
+    "remove": "Retirer"
+  },
+  "order": {
+    "status": {
+      "pending": "En attente",
+      "confirmed": "Confirmée",
+      "preparing": "En préparation",
+      "ready": "Prête",
+      "picked_up": "Récupérée",
+      "in_transit": "En cours de livraison",
+      "delivered": "Livrée",
+      "canceled": "Annulée"
+    },
+    "tracking": {
+      "title": "Suivi de Commande",
+      "orderNumber": "Commande N°",
+      "estimatedTime": "Temps estimé",
+      "driverLocation": "Position du livreur"
+    }
+  },
+  "payment": {
+    "methods": {
+      "wave": "Wave",
+      "orangeMoney": "Orange Money",
+      "mtnMoney": "MTN Money",
+      "moovMoney": "Moov Money",
+      "cash": "Espèces",
+      "card": "Carte bancaire"
+    },
+    "processing": "Paiement en cours...",
+    "success": "Paiement réussi",
+    "failed": "Paiement échoué"
+  },
+  "pos": {
+    "dashboard": "Tableau de bord POS",
+    "newOrder": "Nouvelle commande",
+    "tables": "Tables",
+    "orders": "Commandes"
+  },
+  "driver": {
+    "dashboard": "Tableau de bord Livreur",
+    "availableDeliveries": "Livraisons disponibles",
+    "activeDeliveries": "Livraisons en cours",
+    "accept": "Accepter",
+    "pickUp": "Récupéré",
+    "deliver": "Livré"
+  },
+  "common": {
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "back": "Retour",
+    "close": "Fermer"
+  }
+}
+

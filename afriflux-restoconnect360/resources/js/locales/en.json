@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "restaurants": "Restaurants",
+    "findStore": "Find a Store",
+    "cart": "Cart",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register"
+  },
+  "home": {
+    "hero": {
+      "title": "Discover the Best Restaurants Near You",
+      "subtitle": "Order, Fast Delivery with Real-Time GPS Tracking",
+      "browseRestaurants": "Browse Restaurants",
+      "findNearby": "Find Nearby"
+    },
+    "featured": {
+      "title": "Featured Restaurants"
+    },
+    "features": {
+      "title": "Why Choose RestoConnect360?",
+      "geolocation": {
+        "title": "Precise Geolocation",
+        "description": "Find the closest restaurants in real-time"
+      },
+      "fastDelivery": {
+        "title": "Fast Delivery",
+        "description": "Live GPS tracking of your order"
+      },
+      "payment": {
+        "title": "Secure Payments",
+        "description": "Wave, Orange Money, MTN Money, Moov Money and more"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Your online ordering and delivery platform",
+    "links": "Quick Links",
+    "contact": "Contact",
+    "rights": "All rights reserved"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign In",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Register"
+    },
+    "register": {
+      "title": "Register",
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Register",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Sign in"
+    }
+  },
+  "restaurant": {
+    "openNow": "Open",
+    "closed": "Closed",
+    "deliveryFee": "Delivery fee",
+    "minOrder": "Minimum order",
+    "delivery": "Delivery",
+    "takeaway": "Takeaway",
+    "dineIn": "Dine In"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty",
+    "subtotal": "Subtotal",
+    "tax": "Tax (18%)",
+    "deliveryFee": "Delivery fee",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove"
+  },
+  "order": {
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "preparing": "Preparing",
+      "ready": "Ready",
+      "picked_up": "Picked Up",
+      "in_transit": "In Transit",
+      "delivered": "Delivered",
+      "canceled": "Canceled"
+    },
+    "tracking": {
+      "title": "Order Tracking",
+      "orderNumber": "Order #",
+      "estimatedTime": "Estimated time",
+      "driverLocation": "Driver location"
+    }
+  },
+  "payment": {
+    "methods": {
+      "wave": "Wave",
+      "orangeMoney": "Orange Money",
+      "mtnMoney": "MTN Money",
+      "moovMoney": "Moov Money",
+      "cash": "Cash",
+      "card": "Credit Card"
+    },
+    "processing": "Processing payment...",
+    "success": "Payment successful",
+    "failed": "Payment failed"
+  },
+  "pos": {
+    "dashboard": "POS Dashboard",
+    "newOrder": "New Order",
+    "tables": "Tables",
+    "orders": "Orders"
+  },
+  "driver": {
+    "dashboard": "Driver Dashboard",
+    "availableDeliveries": "Available Deliveries",
+    "activeDeliveries": "Active Deliveries",
+    "accept": "Accept",
+    "pickUp": "Picked Up",
+    "deliver": "Delivered"
+  },
+  "common": {
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "back": "Back",
+    "close": "Close"
+  }
+}
+

@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "restaurants": "المطاعم",
+    "findStore": "ابحث عن متجر",
+    "cart": "السلة",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "register": "التسجيل"
+  },
+  "home": {
+    "hero": {
+      "title": "اكتشف أفضل المطاعم بالقرب منك",
+      "subtitle": "اطلب، توصيل سريع مع تتبع GPS في الوقت الفعلي",
+      "browseRestaurants": "تصفح المطاعم",
+      "findNearby": "البحث القريب"
+    },
+    "featured": {
+      "title": "المطاعم المميزة"
+    },
+    "features": {
+      "title": "لماذا تختار RestoConnect360؟",
+      "geolocation": {
+        "title": "تحديد الموقع الدقيق",
+        "description": "ابحث عن أقرب المطاعم في الوقت الفعلي"
+      },
+      "fastDelivery": {
+        "title": "توصيل سريع",
+        "description": "تتبع GPS مباشر لطلبك"
+      },
+      "payment": {
+        "title": "دفع آمن",
+        "description": "Wave، Orange Money، MTN Money، Moov Money والمزيد"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "منصة الطلب والتوصيل عبر الإنترنت",
+    "links": "روابط سريعة",
+    "contact": "اتصل",
+    "rights": "جميع الحقوق محفوظة"
+  },
+  "common": {
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "success": "نجاح",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "add": "إضافة",
+    "back": "رجوع",
+    "close": "إغلاق"
+  }
+}
+

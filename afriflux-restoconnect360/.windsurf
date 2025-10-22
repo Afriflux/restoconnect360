@@ -1,0 +1,71 @@
+{
+  "name": "RestoConnect360",
+  "description": "Plateforme SaaS Multi-Restaurant pour l'Afrique de l'Ouest",
+  "version": "1.0.0",
+  "type": "fullstack",
+  "framework": {
+    "backend": "laravel",
+    "frontend": "vue",
+    "database": "mysql",
+    "cache": "redis"
+  },
+  "ports": {
+    "laravel": 8000,
+    "vite": 5173,
+    "mysql": 3306,
+    "redis": 6379
+  },
+  "scripts": {
+    "setup": [
+      "composer install",
+      "npm install",
+      "cp .env.example .env",
+      "php artisan key:generate",
+      "php artisan migrate",
+      "php artisan db:seed"
+    ],
+    "dev": [
+      "php artisan serve --host=0.0.0.0 --port=8000",
+      "npm run dev"
+    ],
+    "build": [
+      "npm run build",
+      "php artisan optimize"
+    ],
+    "test": [
+      "php artisan test"
+    ],
+    "monitoring": [
+      "php artisan horizon:status",
+      "php artisan telescope:prune"
+    ]
+  },
+  "environment": {
+    "php": "8.2+",
+    "node": "18+",
+    "mysql": "8.0+",
+    "redis": "latest"
+  },
+  "features": {
+    "monitoring": true,
+    "security": true,
+    "performance": true,
+    "pwa": true,
+    "i18n": true,
+    "payments": true,
+    "delivery": true
+  },
+  "tools": {
+    "sentry": true,
+    "telescope": true,
+    "horizon": true,
+    "2fa": true,
+    "rate_limiting": true
+  },
+  "documentation": {
+    "api": "routes/api.php",
+    "database": "database/migrations/",
+    "frontend": "resources/js/",
+    "security": "app/Http/Middleware/"
+  }
+}

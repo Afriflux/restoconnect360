@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>RestoConnect360 - Plateforme de Restauration Digitale</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#16a34a">
+    <meta name="description" content="Plateforme complète pour la gestion de restaurants, cafés, bars et commerces alimentaires. POS, livraison GPS, paiements mobiles africains, kiosque digital.">
+    <meta name="keywords" content="restaurant, POS, livraison, paiement mobile, kiosque digital, Wave, Orange Money, MTN Money">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Preconnect pour optimiser les performances -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Tailwind CSS CDN pour un affichage immédiat -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    },
+                    fontFamily: {
+                        'heading': ['Poppins', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fallback pour les navigateurs qui ne supportent pas Vite -->
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+        <style>
+            body { 
+                font-family: 'Inter', sans-serif; 
+                margin: 0; 
+                background-color: #f9fafb; 
+            }
+            .loading { 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                height: 100vh; 
+                font-size: 1.5rem; 
+                color: #16a34a; 
+            }
+        </style>
+    </noscript>
+</head>
+<body>
+    <div id="app">
+        <!-- Contenu de fallback pendant le chargement -->
+        <div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">RestoConnect360</h1>
+                <p class="text-gray-600">Chargement de la plateforme...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vue.js CDN pour une application fonctionnelle -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+        
+        const App = {
+            data() {
+                return {
+                    isLoading: true,
+                    restaurants: [
+                        { name: 'Restaurant Le Gourmet', category: 'Français', rating: 4.8 },
+                        { name: 'Pizza Corner', category: 'Italien', rating: 4.6 },
+                        { name: 'Sushi Master', category: 'Japonais', rating: 4.9 },
+                        { name: 'Burger King', category: 'Fast Food', rating: 4.3 }
+                    ],
+                    selectedRestaurant: null
+                }
+            },
+            mounted() {
+                setTimeout(() => {
+                    this.isLoading = false;
+                }, 1000);
+            },
+            methods: {
+                selectRestaurant(restaurant) {
+                    this.selectedRestaurant = restaurant;
+                },
+                goToMenu() {
+                    alert('Fonctionnalité à venir : Menu du restaurant');
+                },
+                orderNow() {
+                    alert('Fonctionnalité à venir : Commande en ligne');
+                }
+            },
+            template: `
+                <div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
+                    <!-- Navigation -->
+                    <nav class="bg-white shadow-lg">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="flex justify-between items-center h-16">
+                                <div class="flex items-center">
+                                    <h1 class="text-2xl font-bold text-green-600">RestoConnect360</h1>
+                                </div>
+                                <div class="flex space-x-4">
+                                    <button class="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">Accueil</button>
+                                    <button class="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">Restaurants</button>
+                                    <button class="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">Commandes</button>
+                                    <button class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700">Connexion</button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <!-- Hero Section -->
+                    <section class="py-20">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                            <h2 class="text-5xl font-bold text-gray-900 mb-6">
+                                Découvrez les meilleurs restaurants
+                            </h2>
+                            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                                Commandez en ligne et profitez d'une livraison rapide dans toute la ville
+                            </p>
+                            <div class="flex justify-center">
+                                <input type="text" placeholder="Rechercher un restaurant..." 
+                                       class="px-6 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500 w-96">
+                                <button class="bg-green-600 text-white px-8 py-3 rounded-r-lg hover:bg-green-700 font-semibold">
+                                    Rechercher
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Restaurants Grid -->
+                    <section class="py-16">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <h3 class="text-3xl font-bold text-gray-900 mb-12 text-center">Nos restaurants partenaires</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div v-for="restaurant in restaurants" :key="restaurant.name" 
+                                     @click="selectRestaurant(restaurant)"
+                                     class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer p-6">
+                                    <div class="text-4xl mb-4">🍽️</div>
+                                    <h4 class="text-xl font-bold mb-2" v-text="restaurant.name"></h4>
+                                    <p class="text-gray-600 mb-2" v-text="restaurant.category"></p>
+                                    <div class="flex items-center">
+                                        <span class="text-yellow-500">★</span>
+                                        <span class="ml-1 text-sm" v-text="restaurant.rating"></span>
+                                    </div>
+                                    <button @click.stop="goToMenu" 
+                                            class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                        Voir le menu
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CTA Section -->
+                    <section class="py-16 bg-green-600">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                            <h3 class="text-3xl font-bold text-white mb-4">Prêt à commander ?</h3>
+                            <p class="text-xl text-green-100 mb-8">Inscrivez-vous maintenant et profitez de réductions exclusives</p>
+                            <button @click="orderNow" 
+                                    class="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                                Commencer maintenant
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Footer -->
+                    <footer class="bg-gray-900 text-white py-12">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="text-center">
+                                <h4 class="text-2xl font-bold mb-4">RestoConnect360</h4>
+                                <p class="text-gray-400">La plateforme de restauration digitale qui connecte restaurants et clients</p>
+                                <div class="mt-8 flex justify-center space-x-6">
+                                    <span class="text-sm text-gray-400">© 2024 RestoConnect360. Tous droits réservés.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            `
+        };
+
+        createApp(App).mount('#app');
+    </script>
+</body>
+</html>

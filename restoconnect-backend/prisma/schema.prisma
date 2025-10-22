@@ -1,0 +1,445 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============= SUPER ADMIN =============
+model Platform {
+  id              String   @id @default(cuid())
+  whiteLabelConfig Json    // Couleurs, logos, textes globaux
+  features        Json     // Feature flags globaux
+  teams           Team[]
+  createdAt       DateTime @default(now())
+}
+
+model Team {
+  id         String   @id @default(cuid())
+  name       String
+  members    User[]
+  role       String   // admin, support, sales, etc
+  platformId String
+  platform   Platform @relation(fields: [platformId], references: [id])
+}
+
+// ============= COMMERCES =============
+model Commerce {
+  id              String    @id @default(cuid())
+  tenantId        String    @unique
+  name            String
+  type            String    // restaurant, cafe, bar, etc
+  
+  // White Label & Branding
+  branding        Json      // {colors, logos, icons, favicon, texts}
+  templateId      String    
+  customCSS       String?
+  
+  // Subscription
+  plan            String    // starter, pro, business, enterprise
+  subscriptionEnd DateTime?
+  features        Json      // Feature flags par commerce
+  
+  // Hiérarchie
+  parentId        String?   // Pour succursales
+  parent          Commerce? @relation("Succursales", fields: [parentId], references: [id])
+  succursales     Commerce[] @relation("Succursales")
+  
+  // Paiements
+  paymentProviders Json     // CinetPay, PayTech, Wave configs
+  delegatedCollection Boolean @default(false)
+  commissionRate   Decimal  @default(3.0)
+  
+  // Relations
+  users           User[]
+  products        Product[]
+  orders          Order[]
+  qrCodes         QRCode[]
+  deliveryDrivers DeliveryDriver[]
+  automations     Automation[]
+  invoices        Invoice[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// ============= USERS =============
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  role        String   // super_admin, commerce_admin, staff, delivery, customer
+  
+  commerceId  String?
+  commerce    Commerce? @relation(fields: [commerceId], references: [id])
+  
+  teamId      String?
+  team        Team?     @relation(fields: [teamId], references: [id])
+  
+  permissions Json     // Permissions granulaires
+  profile     Json     // Nom, téléphone, photo, etc
+  
+  orders      Order[]  @relation("CustomerOrders")
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============= PRODUCTS =============
+model Product {
+  id          String   @id @default(cuid())
+  commerceId  String
+  commerce    Commerce @relation(fields: [commerceId], references: [id])
+  
+  name        String
+  description String?
+  price       Decimal
+  images      String[] // URLs CloudFlare R2
+  category    String
+  
+  halal       Boolean  @default(false)
+  available   Boolean  @default(true)
+  stock       Int?
+  
+  variants    Json?    // Tailles, options, etc
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([commerceId, category])
+}
+
+// ============= ORDERS =============
+model Order {
+  id          String   @id @default(cuid())
+  orderNumber String   @unique
+  
+  commerceId  String
+  commerce    Commerce @relation(fields: [commerceId], references: [id])
+  
+  customerId  String
+  customer    User     @relation("CustomerOrders", fields: [customerId], references: [id])
+  
+  // QR Codes
+  tableQRId   String?
+  orderQRCode String   @unique // Pour tracking
+  
+  // Items
+  items       Json     // [{productId, quantity, price, variants}]
+  subtotal    Decimal
+  tax         Decimal
+  total       Decimal
+  
+  // Status
+  status      String   // pending, confirmed, preparing, ready, delivered, cancelled
+  paymentStatus String // pending, paid, refunded
+  
+  // Delivery
+  deliveryType String? // dine-in, takeaway, delivery
+  driverId    String?
+  driver      DeliveryDriver? @relation(fields: [driverId], references: [id])
+  deliveryAddress Json?
+  
+  // Paiement
+  paymentMethod String // cash, cinetpay, paytech, wave, delegated
+  paymentProvider String?
+  transactionId String?
+  
+  invoiceId   String?  @unique
+  invoice     Invoice? @relation(fields: [invoiceId], references: [id])
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([commerceId, status])
+  @@index([customerId])
+}
+
+// ============= QR CODES =============
+model QRCode {
+  id          String   @id @default(cuid())
+  type        String   // menu, table, order, invoice, loyalty, checkin
+  
+  commerceId  String
+  commerce    Commerce @relation(fields: [commerceId], references: [id])
+  
+  entityId    String?  // ID de la table, commande, etc
+  code        String   @unique
+  metadata    Json     // Données spécifiques au type
+  analytics   Json     // Scans count, locations, devices
+  
+  active      Boolean  @default(true)
+  expiresAt   DateTime?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([type, entityId, commerceId])
+  @@index([commerceId, type])
+}
+
+// ============= DELIVERY =============
+model DeliveryDriver {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  
+  commerceId  String
+  commerce    Commerce @relation(fields: [commerceId], references: [id])
+  
+  vehicle     String   // moto, voiture, velo
+  plateNumber String?
+  
+  status      String   // available, busy, offline
+  currentLocation Json? // {lat, lng, timestamp}
+  
+  orders      Order[]
+  
+  // Stats
+  totalDeliveries Int   @default(0)
+  rating      Decimal?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============= INVOICES =============
+model Invoice {
+  id          String   @id @default(cuid())
+  number      String   @unique // INV-2024-001
+  
+  commerceId  String
+  commerce    Commerce @relation(fields: [commerceId], references: [id])
+  
+  orderId     String   @unique
+  order       Order?
+  
+  // QR Code pour paiement/vérification
+  qrCode      String   @unique
+  qrCodeUrl   String   // Image QR
+  
+  // Données facture
+  items       Json
+  subtotal    Decimal
+  tax         Decimal
+  total       Decimal
+  
+  // PDF
+  pdfUrl      String   // CloudFlare R2
+  
+  // Status
+  status      String   // draft, sent, paid, cancelled
+  paidAt      DateTime?
+  
+  // Metadata
+  metadata    Json     // Infos commerce, client, etc
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([commerceId, status])
+}
+
+// ============= AUTOMATISATIONS =============
+model Automation {
+  id          String   @id @default(cuid())
+  
+  commerceId  String
+  commerce    Commerce @relation(fields: [commerceId], references: [id])
+  
+  name        String
+  type        String   // notification, campaign, subscription, report
+  
+  // Trigger
+  trigger     Json     // {type: "order_created", conditions: {...}}
+  
+  // Actions
+  actions     Json     // [{type: "send_sms", params: {...}}, ...]
+  
+  // Schedule (optionnel)
+  schedule    String?  // Cron expression
+  
+  active      Boolean  @default(true)
+  
+  // Stats
+  executions  Int      @default(0)
+  lastRun     DateTime?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([commerceId, type, active])
+}
+
+// ============= SUBSCRIPTIONS =============
+model Subscription {
+  id          String   @id @default(cuid())
+  
+  commerceId  String   @unique
+  commerce    Commerce @relation(fields: [commerceId], references: [id])
+  
+  plan        String   // starter, pro, business, enterprise
+  status      String   // active, cancelled, expired, trial
+  
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  
+  autoRenew   Boolean  @default(true)
+  
+  // Paiement
+  paymentMethod String?
+  lastPayment   DateTime?
+  nextPayment   DateTime?
+  
+  // Add-ons activés
+  addons      Json     // [{id: "halal", active: true, price: 5000}, ...]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============= PAYMENTS =============
+model Payment {
+  id          String   @id @default(cuid())
+  
+  commerceId  String
+  
+  // Type
+  type        String   // order, subscription, addon, equipment
+  entityId    String   // ID commande, subscription, etc
+  
+  // Montant
+  amount      Decimal
+  currency    String   @default("XOF")
+  
+  // Provider
+  provider    String   // cinetpay, paytech, wave, delegated, cash
+  transactionId String?
+  
+  // Commission (si délégation)
+  isDelegated Boolean  @default(false)
+  commission  Decimal?
+  netAmount   Decimal  // Montant après commission
+  
+  // Status
+  status      String   // pending, completed, failed, refunded
+  
+  // Metadata
+  metadata    Json
+  
+  // Dates
+  paidAt      DateTime?
+  refundedAt  DateTime?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([commerceId, status])
+  @@index([provider, transactionId])
+}
+
+// ============= EQUIPMENT (POS/Kiosk) =============
+model Equipment {
+  id          String   @id @default(cuid())
+  
+  commerceId  String
+  commerce    Commerce @relation(fields: [commerceId], references: [id])
+  
+  type        String   // pos, kiosk, printer, scanner
+  model       String
+  serialNumber String  @unique
+  
+  // Location
+  location    String   // Succursale, table, etc
+  
+  // Status
+  status      String   // active, maintenance, inactive
+  
+  // Location/Vente
+  ownership   String   // rented, owned, provided
+  monthlyFee  Decimal?
+  purchasePrice Decimal?
+  
+  // Maintenance
+  lastMaintenance DateTime?
+  nextMaintenance DateTime?
+  
+  metadata    Json
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([commerceId, type, status])
+}
+
+// ============= CAMPAIGNS =============
+model Campaign {
+  id          String   @id @default(cuid())
+  
+  commerceId  String
+  commerce    Commerce @relation(fields: [commerceId], references: [id])
+  
+  name        String
+  type        String   // sms, email, whatsapp, push
+  
+  // Targeting
+  targetAudience Json  // {segment: "all", filters: {...}}
+  
+  // Content
+  subject     String?
+  message     String
+  mediaUrl    String?
+  
+  // Schedule
+  scheduledAt DateTime?
+  status      String   // draft, scheduled, sent, cancelled
+  
+  // Stats
+  sent        Int      @default(0)
+  delivered   Int      @default(0)
+  opened      Int      @default(0)
+  clicked     Int      @default(0)
+  
+  sentAt      DateTime?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([commerceId, status])
+}
+
+// ============= ANALYTICS =============
+model Analytics {
+  id          String   @id @default(cuid())
+  
+  commerceId  String
+  date        DateTime
+  
+  // Métriques
+  orders      Int      @default(0)
+  revenue     Decimal  @default(0)
+  customers   Int      @default(0)
+  
+  // Par canal
+  dineIn      Int      @default(0)
+  takeaway    Int      @default(0)
+  delivery    Int      @default(0)
+  
+  // QR Stats
+  qrScans     Json     // {menu: 10, table: 5, ...}
+  
+  // Top products
+  topProducts Json
+  
+  metadata    Json
+  
+  createdAt   DateTime @default(now())
+  
+  @@unique([commerceId, date])
+  @@index([commerceId, date])
+}

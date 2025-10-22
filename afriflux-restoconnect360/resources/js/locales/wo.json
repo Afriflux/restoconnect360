@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "restaurants": "Restaurants yi",
+    "findStore": "Seet boutique bi",
+    "cart": "Panier",
+    "login": "Dugg",
+    "logout": "Génn",
+    "register": "Bindu"
+  },
+  "home": {
+    "hero": {
+      "title": "Gis restaurants yi gën a baax ci sa suuf",
+      "subtitle": "Dem, Yoonu ci yoon ak Tracking GPS ci wakhtul réel",
+      "browseRestaurants": "Xool Restaurants yi",
+      "findNearby": "Seet ci kanam"
+    },
+    "featured": {
+      "title": "Restaurants yu njool"
+    },
+    "features": {
+      "title": "Lu tax RestoConnect360?",
+      "geolocation": {
+        "title": "Géolocalisation bu baax",
+        "description": "Seet restaurants yi gën a jege ci wakhtul réel"
+      },
+      "fastDelivery": {
+        "title": "Yoonu ci gaaw",
+        "description": "Tracking GPS direct ci sa commande"
+      },
+      "payment": {
+        "title": "Fayoo yu amal",
+        "description": "Wave, Orange Money, MTN Money, Moov Money"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Sa plateforme commande ak livraison en ligne",
+    "links": "Liens yi gaaw",
+    "contact": "Jokkoo",
+    "rights": "Ñépp droit réservés"
+  },
+  "common": {
+    "search": "Seet",
+    "filter": "Filter",
+    "sort": "Organiser",
+    "loading": "Dafa ngi chargement...",
+    "error": "Am na ab erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Dindi",
+    "edit": "Soppi",
+    "add": "Yokk",
+    "back": "Dellu",
+    "close": "Tëj"
+  }
+}
+
