@@ -26,6 +26,11 @@ Route::prefix('admin')->name('admin.')->middleware('vue.auth')->group(function (
     });
 });
 
+// Include real-time testing routes (development only)
+if (app()->environment('local', 'development')) {
+    require __DIR__.'/realtime-test.php';
+}
+
 // Catch-all route for Vue.js SPA - must be last
 Route::get('/{any}', function () {
     return view('app');
